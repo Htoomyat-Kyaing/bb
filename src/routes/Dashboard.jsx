@@ -8,49 +8,50 @@ const Dashboard = () => {
     navigate("/carpassticket");
   };
   return (
-    <div className="flex flex-col px-4 py-7 gap-7">
+    <div className="flex flex-col px-4 py-2 md:px-4 md:py-7 gap-7">
       <div className="flex flex-row-reverse w-full">
-        <button
-          onClick={handleClick}
-          className="card-button !max-w-[150px] !text-[16px]"
-        >
+        <button onClick={handleClick} className="text-sm card-button max-w-32">
           Car Pass Ticket
         </button>
       </div>
-      <div className="flex gap-[60px]">
-        <div className="w-[515px] ">
-          <p className="text-3xl ">Lorem, ipsum dolor.</p>
-          <p className="text-3xl ">Lorem ipsum dolor sit amet.</p>
-        </div>
-        <div className="w-[515px]">
-          <p className="text-3xl ">Lorem, ipsum dolor.</p>
-          <p className="text-3xl ">Lorem ipsum dolor sit amet.</p>
-        </div>
-      </div>
-      <div className="flex gap-[60px]">
-        <div className="w-[515px] h-[151px] bg-dashboard-display divide-x-2 flex justify-between items-center  py-7 *:flex-grow divide-white rounded-md shadow-md">
-          <div className="flex flex-col items-center justify-center gap-5 text-2xl">
-            <p>Large</p>
-            <span className="text-[40px]">8</span>
+
+      <div className="flex flex-col w-full gap-4 md:flex-row md:gap-12">
+        <div className="flex flex-col gap-5 md:gap-[60px]">
+          <div className="md:w-[515px] ">
+            <p className="text-base md:text-3xl">ယနေ့ ဝင်ရောက်သော</p>
+            <p className="text-xl font-bold md:text-3xl ">ယာဉ်အမျိုးအစားများ</p>
           </div>
-          <div className="flex flex-col items-center justify-center gap-5 text-2xl">
-            <p>Medium</p>
-            <span className="text-[40px]">73</span>
-          </div>
-          <div className="flex flex-col items-center justify-center gap-5 text-2xl">
-            <p>Small</p>
-            <span className="text-[40px]">63</span>
+          <div className="w-full md:w-[515px] h-[151px] bg-dashboard-display divide-x-2 flex justify-between items-center  py-7 *:flex-grow divide-white rounded-md shadow-md">
+            <div className="flex flex-col items-center justify-center gap-5 text-2xl">
+              <p className="text-sm ">ယာဉ််ကြီး</p>
+              <span className="text-2xl md:text-[40px]">8</span>
+            </div>
+            <div className="flex flex-col items-center justify-center gap-5 text-2xl">
+              <p className="text-sm ">ယာဉ်လတ်</p>
+              <span className=" text-2xl md:text-[40px]">73</span>
+            </div>
+            <div className="flex flex-col items-center justify-center gap-5 text-2xl">
+              <p className="text-sm ">ယာဉ်သေး</p>
+              <span className="text-2xl md:text-[40px]">63</span>
+            </div>
           </div>
         </div>
 
-        <div className="w-[515px] h-[151px] bg-dashboard-display divide-x-2 flex justify-between items-center  py-7 *:flex-grow divide-white rounded-md shadow-md">
-          <div className="flex items-center justify-start gap-5 text-2xl indent-9">
-            <p className="text-[40px]">$ 4500</p>
+        <div className="flex flex-col gap-5 md:gap-[60px]">
+          <div className="md:w-[515px] ">
+            <p className="text-base md:text-3xl">ယနေ့ ရရှိသော</p>
+            <p className="text-xl font-bold md:text-3xl ">စုစုပေါင်းငွေပမာဏ</p>
+          </div>
+          <div className="w-full md:w-[515px] h-[151px] bg-dashboard-display divide-x-2 flex justify-between items-center  py-7 *:flex-grow divide-white rounded-md shadow-md">
+            <div className="flex items-center justify-start gap-5 text-2xl indent-9">
+              <p className="text-2xl md:text-[40px]">4,500 ကျပ်</p>
+            </div>
           </div>
         </div>
       </div>
-      <Table />
-      <Pagination />
+
+      {/* <Table />
+      <Pagination /> */}
     </div>
   );
 };

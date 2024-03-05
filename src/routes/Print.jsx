@@ -11,18 +11,19 @@ const Print = () => {
     console.log(e.target.value);
   };
   return (
-    <main className="root-layout !pt-5 !gap-5">
-      <img
+    <main className="flex flex-col items-center min-w-full min-h-screen gap-8 px-4 py-8">
+      {/* <img
         className="absolute top-0 right-0 w-32 h-32"
         src="/circle.svg"
         alt="/circle.svg"
-      />
+      /> */}
+
+      <Link to={"/"}>
+        <img className="logo" src="/logo.png" alt="" />
+      </Link>
 
       <div className="flex items-center justify-end w-full max-w-[1000px]">
-        <Link to={"/"}>
-          <img className="logo !max-h-[112px]" src="/logo.png" alt="" />
-        </Link>
-        <div className="min-w-[333px] min-h-[112px] flex justify-end items-end">
+        <div className="min-w-[333px] flex justify-end items-end">
           <button
             className="card-button !max-w-[150px]"
             onClick={() => {
@@ -39,7 +40,7 @@ const Print = () => {
         onSubmit={handleSubmit}
       >
         <div className="card-title flex justify-between !py-2">
-          <h1>Car Pass Ticket</h1>
+          <h1 className="!text-xl">Car Pass Ticket</h1>
 
           <div className="min-w-[146px] min-h-[56px] flex items-center justify-center gap-2">
             <p>Number</p>
@@ -50,25 +51,25 @@ const Print = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-6 py-9">
-          <div className="card-input pl-7 !pr-28">
-            <label className="!text-2xl" htmlFor="date">
+        <div className="flex flex-col gap-6 px-4 py-9">
+          <div className="flex flex-col justify-between flex-1 gap-4 md:items-center md:gap-8 md:flex-row">
+            <label className="w-1/3 md:!text-2xl" htmlFor="date">
               Date
             </label>
             <input
-              className="!max-w-[593px] !indent-0 !px-5 !text-xl !min-h-16 "
+              className="flex-grow h-full px-4 text-base border-2 rounded min-h-12 border-amber-300"
               name="date"
               onChange={handleChange}
               type="date"
             />
           </div>
 
-          <div className="card-input pl-7 !pr-28">
-            <label className="!text-2xl" htmlFor="type">
+          <div className="flex flex-col justify-between flex-1 gap-4 md:items-center md:gap-8 md:flex-row">
+            <label className="w-1/3 md:!text-2xl" htmlFor="type">
               Select Vehicle Type
             </label>
             <div className="relative w-full max-w-[593px]">
-              <select className="w-full !indent-0 !px-5 !text-xl !min-h-16 appearance-none">
+              <select className="flex-grow w-full h-full px-4 text-base border-2 rounded appearance-none min-h-12 border-amber-300">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -81,12 +82,12 @@ const Print = () => {
             </div>
           </div>
 
-          <div className="card-input pl-7 !pr-28">
-            <label className="!text-2xl" htmlFor="type">
+          <div className="flex flex-col justify-between flex-1 gap-4 md:items-center md:gap-8 md:flex-row">
+            <label className="w-1/3 md:!text-2xl" htmlFor="type">
               Vehicle Number
             </label>
             <input
-              className="!max-w-[593px] !indent-0 !px-5 !text-xl !min-h-16"
+              className="flex-grow h-full px-4 text-base border-2 rounded min-h-12 border-amber-300"
               name="text"
               // onChange={handleChange}
               type="text"
@@ -94,12 +95,12 @@ const Print = () => {
             />
           </div>
 
-          <div className="card-input pl-7 !pr-28">
-            <label className="!text-2xl" htmlFor="type">
+          <div className="flex flex-col justify-between flex-1 gap-4 md:items-center md:gap-8 md:flex-row">
+            <label className="w-1/3 md:!text-2xl" htmlFor="type">
               Timestamp
             </label>
             <input
-              className="!max-w-[593px] !indent-0 !px-5 !text-xl !min-h-16"
+              className="flex-grow h-full px-4 text-base border-2 rounded min-h-12 border-amber-300"
               name="text"
               // onChange={handleChange}
               type="text"
@@ -107,12 +108,12 @@ const Print = () => {
             />
           </div>
 
-          <div className="card-input pl-7 !pr-28">
-            <label className="!text-2xl" htmlFor="type">
+          <div className="flex flex-col justify-between flex-1 gap-4 md:items-center md:gap-8 md:flex-row">
+            <label className="w-1/3 md:!text-2xl" htmlFor="type">
               Amount to pay
             </label>
             <input
-              className="!max-w-[593px] !indent-0 !px-5 !text-xl !min-h-16"
+              className="flex-grow h-full px-4 text-base border-2 rounded min-h-12 border-amber-300"
               name="text"
               // onChange={handleChange}
               type="text"
@@ -121,7 +122,7 @@ const Print = () => {
           </div>
 
           <div className="flex justify-center w-full">
-            <button className="card-button !min-w-[640px] !min-h-[69px] flex gap-2 justify-center items-center">
+            <button className="card-button md:!min-w-[640px] md:!min-h-[69px] flex gap-2 justify-center items-center">
               <img className="w-6 h-6 " src="/printer.svg" alt="printer.svg" />
               <p className="text-2xl font-bold">Save & Print</p>
             </button>
