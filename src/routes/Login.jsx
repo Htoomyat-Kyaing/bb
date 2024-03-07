@@ -24,9 +24,9 @@ const Login = () => {
   //   }
   // };
   useEffect(() => {
-    console.log(authenticated);
+    // console.log(authenticated);
     if (authenticated) {
-      // navigate("/");
+      navigate("/");
     }
   }, [authenticated]);
   const handleSubmit = async (e) => {
@@ -50,17 +50,17 @@ const Login = () => {
           setauthenticated(true);
           localStorage.setItem("authenticated", true);
           localStorage.setItem("access token", data.access_token);
-          // navigate("/");
+          navigate("/");
         }
       });
   };
 
-  // useEffect(() => {
-  //   console.log(authenticated);
-  //   if (authenticated) {
-  //     navigate("/");
-  //   }
-  // }, [authenticated]);
+  useEffect(() => {
+    console.log(authenticated);
+    if (authenticated) {
+      navigate("/");
+    }
+  }, [authenticated]);
 
   return (
     <main className="flex flex-col items-center justify-center min-w-full min-h-screen gap-24 md:justify-start md:gap-4 md:mt-24">
