@@ -1,33 +1,66 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email_or_phone: "admin@gmail.com",
+    password: "password",
   });
-  // const URL =
-  //   "https://car.cbs.com.mm/api/v1/login?email=yeyint@gmail.com&password=asdfasdf";
+  const URL = "https://car.cbs.com.mm/api/v1/login";
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const handleSubmit = (e) => {
+  const [authenticated, setauthenticated] = useState(
+    localStorage.getItem("authenticated")
+  );
+  // const users = [{ username: "Jane", password: "testpassword" }];
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const account = users.find((user) => user.username === username);
+  //   if (account && account.password === password) {
+  //     setauthenticated(true);
+  //     localStorage.setItem("authenticated", true);
+  //   }
+  // };
+  useEffect(() => {
+    console.log(authenticated);
+    if (authenticated) {
+      // navigate("/");
+    }
+  }, [authenticated]);
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    // console.log(URL);
-    // fetch(URL, {
-    //   method: "post",
-    //   mode: "no-cors",
-    //   headers: {
-    //     accept: "application.json",
-    //     "content-Type": "application/json",
-    //   },
-    //   body: {
-    //     // email: "yeyint@gmail.com",
-    //     // password: "asdfasdf",
-    //   },
-    // });
+    fetch(URL, {
+      method: "post",
+      // mode: "no-cors",
+      headers: {
+        Accept: "application.json",
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email_or_phone: formData.email_or_phone,
+        password: formData.password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.result);
+        if (data.result) {
+          setauthenticated(true);
+          localStorage.setItem("authenticated", true);
+          localStorage.setItem("access token", data.access_token);
+          // navigate("/");
+        }
+      });
   };
+
+  // useEffect(() => {
+  //   console.log(authenticated);
+  //   if (authenticated) {
+  //     navigate("/");
+  //   }
+  // }, [authenticated]);
 
   return (
     <main className="flex flex-col items-center justify-center min-w-full min-h-screen gap-24 md:justify-start md:gap-4 md:mt-24">

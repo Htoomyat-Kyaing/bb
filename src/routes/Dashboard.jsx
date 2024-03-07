@@ -50,8 +50,8 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* <Table />
-      <Pagination /> */}
+      <Table />
+      <Pagination />
     </div>
   );
 };

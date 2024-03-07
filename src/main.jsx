@@ -15,6 +15,7 @@ import Print from "./routes/Print.jsx";
 import CarTypes from "./routes/CarTypes.jsx";
 import AllUsers from "./routes/AllUsers.jsx";
 import AddNewUser from "./routes/AddNewUser.jsx";
+import RolePermission from "./routes/RolePermission.jsx";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "/allusers",
         element: <AllUsers />,
+      },
+      {
+        path: "/rolepermission",
+        element: <RolePermission />,
       },
     ],
   },
