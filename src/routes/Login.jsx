@@ -25,9 +25,9 @@ const Login = () => {
   // };
   useEffect(() => {
     // console.log(authenticated);
-    if (authenticated) {
-      navigate("/");
-    }
+    // if (authenticated) {
+    //   navigate("/");
+    // }
   }, [authenticated]);
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,15 +50,16 @@ const Login = () => {
           setauthenticated(true);
           localStorage.setItem("authenticated", true);
           localStorage.setItem("access token", data.access_token);
+          console.log(localStorage.getItem("access token"));
           navigate("/");
         }
       });
   };
 
   useEffect(() => {
-    console.log(authenticated);
+    // console.log(authenticated);
     if (authenticated) {
-      navigate("/");
+      // navigate("/");
     }
   }, [authenticated]);
 

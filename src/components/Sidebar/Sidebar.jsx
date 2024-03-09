@@ -8,17 +8,13 @@ const Sidebar = () => {
   const [isActive, setIsActive] = useState(false);
   const [isUserBtnActive, setIsUserBtnActive] = useState(false);
   return (
-    <nav className="flex-col items-center hidden min-h-full gap-6 pt-12 md:flex j bg-sidebar min-w-64">
+    <nav className="flex-col items-center hidden min-h-screen gap-6 pt-12 md:flex j bg-sidebar min-w-64">
       <Link to={"/"}>
         <img className="sidebar-logo" src="/Sidebar/logo.png" alt="" />
       </Link>
       <div className="flex flex-col items-center justify-center gap-1">
         <Button path="/" name="Dashboard" img="home.svg" />
-        <Button
-          path="/carpassticket"
-          name="Car Pass Ticket"
-          img="file-text.svg"
-        />
+        <Button path="/print" name="Car Pass Ticket" img="file-text.svg" />
         <Button path="/view-report" name="Report" img="file-text.svg" />
         <div
           className={cn(
@@ -39,7 +35,7 @@ const Sidebar = () => {
 
         <div className={cn("flex flex-col gap-1", isActive ? "" : "hidden")}>
           <Button
-            path={"/setupandconfig"}
+            path={"/generalsetting"}
             name={"General Setting"}
             img="settings.svg"
           ></Button>

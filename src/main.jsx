@@ -10,11 +10,12 @@ import VerifyOTP from "./routes/VerifyOTP.jsx";
 import Dashboard from "./routes/Dashboard.jsx";
 import CarPassTicket from "./routes/CarPassTicket.jsx";
 import Report from "./routes/Report.jsx";
-import SetupAndConfig from "./routes/SetupAndConfig.jsx";
 import Print from "./routes/Print.jsx";
 import CarTypes from "./routes/CarTypes.jsx";
 import AllUsers from "./routes/AllUsers.jsx";
 import AddNewUser from "./routes/AddNewUser.jsx";
+import GeneralSetting from "./routes/GeneralSetting.jsx";
+import RolePermissionDashboard from "./routes/RolePermissionDashboard.jsx";
 import RolePermission from "./routes/RolePermission.jsx";
 
 const router = createBrowserRouter([
@@ -35,8 +36,8 @@ const router = createBrowserRouter([
         element: <Report />,
       },
       {
-        path: "/setupandconfig",
-        element: <SetupAndConfig />,
+        path: "/generalsetting",
+        element: <GeneralSetting />,
       },
       {
         path: "/car-types",
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: "/rolepermission",
         element: <RolePermission />,
+      },
+      {
+        path: "/roles/:roldID/permissions",
+        element: <RolePermissionDashboard />,
       },
     ],
   },

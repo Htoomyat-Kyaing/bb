@@ -2,7 +2,7 @@ import ReactPaginate from "react-paginate";
 
 const Pagination = () => {
   return (
-    <div className="flex justify-center w-full">
+    <div className="flex justify-center w-full md:justify-end">
       <ReactPaginate
         breakLabel={
           <div className="w-[30px] h-[30px] text-[12px] md:w-[44px] md:h-[46px] border-[1.5px] border-[#FFCC00] rounded flex items-center justify-center md:text-xl selected-none">

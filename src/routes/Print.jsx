@@ -1,13 +1,22 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Print = () => {
+  const [formData, setFormData] = useState({
+    number: 0,
+    date: "",
+    vehicleType: "Large",
+    vehicleNumber: "",
+    timestamp: "",
+    amount: "",
+  });
   let navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(formData);
+    console.log(formData);
   };
   const handleChange = (e) => {
-    // setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
     console.log(e.target.value);
   };
   return (
@@ -45,9 +54,13 @@ const Print = () => {
           <div className="min-w-[146px] min-h-[56px] flex items-center justify-center gap-2">
             <p>Number</p>
             <span>:</span>
-            <div className="rounded w-full max-w-[60px] min-h-[56px] bg-white flex items-center justify-center">
-              25
-            </div>
+            <input
+              type="number"
+              name="number"
+              onChange={handleChange}
+              className="flex items-center justify-center bg-white rounded max-w-10 min-h-8"
+              defaultValue={0}
+            ></input>
           </div>
         </div>
 
@@ -57,7 +70,7 @@ const Print = () => {
               Date
             </label>
             <input
-              className="flex-grow h-full px-4 text-base border-2 rounded min-h-12 border-amber-300"
+              className="flex-grow h-full px-4 text-base border-2 rounded min-h-12 border-amber-300 max-w-[593px]"
               name="date"
               onChange={handleChange}
               type="date"
@@ -69,10 +82,15 @@ const Print = () => {
               Select Vehicle Type
             </label>
             <div className="relative w-full max-w-[593px]">
-              <select className="flex-grow w-full h-full px-4 text-base border-2 rounded appearance-none min-h-12 border-amber-300">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
+              <select
+                className="flex-grow w-full h-full px-4 text-base border-2 rounded appearance-none min-h-12 border-amber-300"
+                onChange={handleChange}
+                name="vehicleType"
+                defaultValue={"Large"}
+              >
+                <option value="Large">Large</option>
+                <option value="Medium">Medium</option>
+                <option value="Small">Small</option>
               </select>
               <img
                 className="absolute w-6 h-6 -translate-x-1/2 -translate-y-1/2 right-[10px] top-1/2"
@@ -87,9 +105,9 @@ const Print = () => {
               Vehicle Number
             </label>
             <input
-              className="flex-grow h-full px-4 text-base border-2 rounded min-h-12 border-amber-300"
-              name="text"
-              // onChange={handleChange}
+              className="flex-grow h-full px-4 text-base border-2 rounded min-h-12 border-amber-300 max-w-[593px]"
+              name="vehicleNumber"
+              onChange={handleChange}
               type="text"
               placeholder="Enter Vehicle Number"
             />
@@ -100,10 +118,10 @@ const Print = () => {
               Timestamp
             </label>
             <input
-              className="flex-grow h-full px-4 text-base border-2 rounded min-h-12 border-amber-300"
-              name="text"
-              // onChange={handleChange}
-              type="text"
+              className="flex-grow h-full px-4 text-base border-2 rounded min-h-12 border-amber-300 max-w-[593px]"
+              name="timestamp"
+              onChange={handleChange}
+              type="time"
               placeholder="4:12PM"
             />
           </div>
@@ -113,9 +131,9 @@ const Print = () => {
               Amount to pay
             </label>
             <input
-              className="flex-grow h-full px-4 text-base border-2 rounded min-h-12 border-amber-300"
-              name="text"
-              // onChange={handleChange}
+              className="flex-grow h-full px-4 text-base border-2 rounded min-h-12 border-amber-300 max-w-[593px]"
+              name="amount"
+              onChange={handleChange}
               type="text"
               placeholder="$0"
             />

@@ -5,7 +5,7 @@ import Table from "../components/Dashboard/Table";
 const Dashboard = () => {
   let navigate = useNavigate();
   const handleClick = () => {
-    navigate("/carpassticket");
+    navigate("/print");
   };
   return (
     <div className="flex flex-col px-4 py-2 md:px-4 md:py-7 gap-7">
@@ -50,7 +50,9 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <Table />
+      <div className="">
+        <Table />
+      </div>
       <Pagination />
     </div>
   );
