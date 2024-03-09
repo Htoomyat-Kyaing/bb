@@ -1,41 +1,59 @@
 import React, { useState, useEffect } from "react";
-const CarTypes = () => {
+const CarTypes = (props) => {
   const [carTypes, setCarTypes] = useState([]);
   const [checkedRows, setCheckedRows] = useState([]);
   const [newCarType, setNewCarName] = useState("");
   const [newCarPrice, setNewCarPrice] = useState("");
   const [selectedCarType, setSelectedCarType] = useState(null);
-  const authToken = "Bearer 2|iwC287FSvVYNwA6GC6JMGDixXuN21Dc4Zf6OBLm140ab9546";
-  useEffect(() => {
-    const fetchCarTypes = async () => {
-      try {
-        const response = await fetch(
-          "https://car.cbs.com.mm/api/v1/car-types",
-          {
-            method: "GET",
-            headers: {
-              Accept: "application/json",
-              Authorization: authToken,
-            },
-          }
+  const fetchCarTypes = async () => {
+    try {
+      const response = await fetch("https://car.cbs.com.mm/api/v1/car-types", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${props.authToken}`,
+        },
+      });
+
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(
+          `Failed to fetch car types. Server responded with ${response.status}: ${errorMessage}`
         );
-
-        if (!response.ok) {
-          const errorMessage = await response.text();
-          throw new Error(
-            `Failed to fetch car types. Server responded with ${response.status}: ${errorMessage}`
-          );
-        }
-        const data = await response.json();
-        setCarTypes(data.data);
-        console.log(data);
-      } catch (error) {
-        console.error("Error fetching car types:", error);
       }
-    };
-
+      const data = await response.json();
+      setCarTypes(data.data);
+      //console.log(data);
+    } catch (error) {
+      console.error("Error fetching car types:", error);
+    }
+  };
+  useEffect(() => {
     fetchCarTypes();
   }, []);
+
+  const handleDeleteCarType = async (id) => {
+    const apiUrl = `https://car.cbs.com.mm/api/v1/car-types/${id}`;
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${props.authToken}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(
+          `Failed to delete car type. Server responded with ${response.status}`
+        );
+      }
+      console.log(`Car type with id ${id} deleted successfully`);
+    } catch (error) {
+      console.error("Error deleting car type:", error);
+    }
+  };
 
   const handleCheckboxChange = (event, id) => {
     const isChecked = event.target.checked;
@@ -48,13 +66,17 @@ const CarTypes = () => {
       );
     }
   };
-
-  const handleDeleteButtonClick = () => {
-    const updatedCarTypes = carTypes.filter(
-      (carType) => !checkedRows.includes(carType.id)
-    );
-    setCarTypes(updatedCarTypes);
-    setCheckedRows([]);
+  const handleDeleteButtonClick = async () => {
+    try {
+      for (const id of checkedRows) {
+        await handleDeleteCarType(id);
+      }
+      console.log("Selected car types deleted successfully");
+      fetchCarTypes();
+      setCheckedRows([]);
+    } catch (error) {
+      console.error("Error deleting car types:", error);
+    }
   };
   const handleAddOrUpdateCarType = async (event) => {
     event.preventDefault();
@@ -66,7 +88,7 @@ const CarTypes = () => {
     const apiUrl = "https://car.cbs.com.mm/api/v1/car-types";
     const authHeader = {
       Accept: "application/json",
-      Authorization: authToken, // Replace YOUR_AUTH_TOKEN with your actual token
+      Authorization: `Bearer ${props.authToken}`,
     };
 
     try {
@@ -85,8 +107,6 @@ const CarTypes = () => {
           },
           body: JSON.stringify(carTypeData),
         });
-        console.log(JSON.stringify(carTypeData));
-
         if (!updateResponse.ok) {
           throw new Error(
             `Failed to update car type. Server responded with ${updateResponse.status}`
@@ -111,6 +131,7 @@ const CarTypes = () => {
           );
         }
       }
+      fetchCarTypes();
       setNewCarName("");
       setNewCarPrice("");
       setSelectedCarType(null);
@@ -118,36 +139,6 @@ const CarTypes = () => {
       console.error("Error updating/creating car type:", error);
     }
   };
-
-  // const handleAddOrUpdateCarType = async (event) => {
-  //   event.preventDefault();
-  //   if (!newCarType || !newCarPrice) {
-  //     alert('Please enter both name and price.');
-  //     return;
-  //   }
-
-  //   if (selectedCarType) {
-  //     const updatedCarTypes = carTypes.map((carType) =>
-  //       carType.id === selectedCarType.id ? { ...carType, name: newCarType, price: parseInt(newCarPrice) } : carType
-  //     );
-
-  //     setCarTypes(updatedCarTypes);
-  //     setSelectedCarType(null);
-  //   }
-  //   else
-  //   {
-  //     const newCar = {
-  //       id: carTypes.length + 1,
-  //       type: newCarType,
-  //       price: parseInt(newCarPrice),
-  //     };
-
-  //     setCarTypes((prevCarTypes) => [...prevCarTypes, newCar]);
-  //   }
-
-  //   setNewCarName('');
-  //   setNewCarPrice('');
-  // };
 
   const handleEditButtonClick = (carType) => {
     setSelectedCarType(carType);
@@ -157,6 +148,15 @@ const CarTypes = () => {
   return (
     <div className="flex gap-x-10">
       <div>
+        <div className="mb-4">
+          <button
+            className="px-4 py-2 font-bold text-white bg-yellow-500 rounded hover:shadow-md hover:cursor-pointer"
+            onClick={handleDeleteButtonClick}
+            disabled={checkedRows.length === 0}
+          >
+            Delete
+          </button>
+        </div>
         <table
           className="h-auto overflow-hidden text-center rounded-lg shadow-lg"
           style={{ width: "500px" }}
@@ -206,20 +206,10 @@ const CarTypes = () => {
             ))}
           </tbody>
         </table>
-
-        <div className="mt-4">
-          <button
-            className="px-4 py-2 font-bold text-white bg-yellow-500 rounded hover:shadow-md hover:cursor-pointer"
-            onClick={handleDeleteButtonClick}
-            disabled={checkedRows.length === 0}
-          >
-            Delete
-          </button>
-        </div>
       </div>
       <form
         onSubmit={handleAddOrUpdateCarType}
-        className="flex flex-col overflow-hidden bg-white rounded-lg"
+        className="flex flex-col overflow-hidden bg-white rounded-lg shadow-lg"
         style={{ width: "600px", height: "300px" }}
       >
         <div className="w-full h-16 bg-yellow-500">
@@ -230,7 +220,7 @@ const CarTypes = () => {
         <div className="flex items-center justify-around w-full px-5 my-5">
           <label className="mr-2 text-lg">New Car Name:</label>
           <input
-            className="px-3 rounded-md h-11"
+            className="px-3 border rounded-md h-11"
             style={{ width: "300px" }}
             type="text"
             value={newCarType}
@@ -241,7 +231,7 @@ const CarTypes = () => {
         <div className="flex items-center justify-around w-full px-5 my-3">
           <label className="mr-2 text-lg">New Car Price:</label>
           <input
-            className="px-3 rounded-md h-11"
+            className="px-3 border rounded-md h-11"
             style={{ width: "300px" }}
             type="text"
             value={newCarPrice}

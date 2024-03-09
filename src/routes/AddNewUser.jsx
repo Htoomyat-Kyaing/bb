@@ -1,31 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Select from "react-select";
-export default function AddNewUser() {
+export default function AddNewUser(props) {
   const [passwordVisibility, setPasswordVisibility] = useState({
     password: false,
     confirmPassword: false,
   });
   const [passwordError, setPasswordError] = useState("");
-  const [selectedRole, setSelectedRole] = useState("none");
+  const [roles, setRoles] = useState([]);
   const [userData, setUserData] = useState({
     name: "",
-    emailaddress: "",
+    email: "",
     phone: "",
+    role_id: "",
     password: "",
-    confirmPassword: "",
-    role: "",
+    password_confirmation: "",
   });
   const data = [
     { name: "Username*", fieldName: "name", type: "text" },
-    { name: "Email Address", fieldName: "emailaddress", type: "email" },
+    { name: "Email Address", fieldName: "email", type: "email" },
     { name: "Phone Number*", fieldName: "phone", type: "tel" },
     { name: "Password", fieldName: "password", type: "password" },
     {
       name: "Confirm Password",
-      fieldName: "confirmPassword",
+      fieldName: "password_confirmation",
       type: "password",
     },
   ];
+  const getRoles = async () => {
+    try {
+      const response = await fetch("https://car.cbs.com.mm/api/v1/roles", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${props.authToken}`,
+          Accept: "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to get roles: ${response.status}`);
+      }
+
+      const rolesData = await response.json();
+      setRoles(rolesData.data);
+    } catch (error) {
+      console.error("Error getting roles:", error);
+    }
+  };
+
+  useEffect(() => {
+    getRoles();
+  }, []);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData((prevInputs) => ({
@@ -35,21 +59,37 @@ export default function AddNewUser() {
   };
   const handleRoleChange = (selectedOption) => {
     if (selectedOption) {
-      setSelectedRole(selectedOption.value);
+      console.log(selectedOption.value);
       setUserData((prevInputs) => ({
         ...prevInputs,
-        role: selectedOption.label,
+        role_id: selectedOption.value,
       }));
     }
   };
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
-    if (userData.password !== userData.confirmPassword) {
+    if (userData.password !== userData.password_confirmation) {
       setPasswordError("Passwords Do Not Match");
       return;
     }
     setPasswordError("");
-    console.log(userData);
+    try {
+      const response = await fetch("https://car.cbs.com.mm/api/v1/users", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${props.authToken}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to create user: ${response.status}`);
+      }
+      setPasswordError("User created successfully");
+    } catch (error) {
+      console.error("Error creating user:", error);
+    }
   };
   function changeType(fieldName) {
     setPasswordVisibility((prevVisibility) => ({
@@ -146,13 +186,13 @@ export default function AddNewUser() {
             <span className="text-lg font-semibold">Role</span>
             <div className="flex card justify-content-center">
               <Select
-                name="role"
+                name="role_id"
                 className="w-full rounded-md react-select h-11"
                 classNamePrefix="select"
-                options={[
-                  { value: { selectedRole }, label: "Admin" },
-                  { value: { selectedRole }, label: "Staff" },
-                ]}
+                options={roles.map((role) => ({
+                  value: role.id,
+                  label: role.name,
+                }))}
                 isClearable={false}
                 onChange={handleRoleChange}
               />

@@ -73,7 +73,7 @@ export default function GeneralSetting() {
             {info.fieldName === "photo" ? (
               <div className="flex items-center justify-start col-span-2 gap-x-2">
                 <input
-                  className="px-2 text-sm font-medium bg-white border border-none rounded-md outline-none h-11 hover:cursor-pointer"
+                  className="px-2 text-sm font-medium bg-white border rounded-md outline-none h-11 hover:cursor-pointer"
                   style={{ width: "300px" }}
                   type={info.type}
                   name={info.fieldName}
@@ -94,7 +94,7 @@ export default function GeneralSetting() {
               </div>
             ) : info.fieldName === "emailaddress" ? (
               <input
-                className="px-2 text-sm font-medium bg-white rounded-md outline-none borderborder-none h-11"
+                className="px-2 text-sm font-medium bg-white border rounded-md outline-none h-11"
                 type={info.type}
                 name={info.fieldName}
                 value={formData[info.fieldName]}
@@ -105,7 +105,7 @@ export default function GeneralSetting() {
               />
             ) : (
               <input
-                className="px-2 text-sm font-medium bg-white border-none rounded-md outline-none h-11"
+                className="px-2 text-sm font-medium bg-white border rounded-md outline-none h-11"
                 type={info.type}
                 name={info.fieldName}
                 value={formData[info.fieldName]}
@@ -135,7 +135,6 @@ export default function GeneralSetting() {
             type="submit"
             name="Update"
             className="w-1/3 h-10 text-sm font-medium bg-yellow-500 rounded-md shadow-md hover:cursor-pointer"
-            value="Update"
           />
         </div>
       </form>
